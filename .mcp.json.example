@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "VoiceStudio": {
+      "type": "http",
+      "url": "http://127.0.0.1:3900/mcp/"
+    },
+    "vidtsx": {
+      "type": "http",
+      "url": "https://learnwithhasan.com/vidtsx/mcp/key/YOUR_VIDTSX_MCP_TOKEN"
+    }
+  }
+}

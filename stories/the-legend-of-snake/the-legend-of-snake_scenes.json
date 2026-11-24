@@ -1,0 +1,141 @@
+{
+  "story_slug": "the-legend-of-snake",
+  "story_title": "The Legend of the White Snake",
+  "target_level": "beginner",
+  "language": "en",
+  "total_scenes": 12,
+  "scenes": [
+    {
+      "index": 1,
+      "role": "cover",
+      "panel_type": "establishing",
+      "text": "The Legend of the White Snake is a famous Chinese folktale that has been told and retold for centuries, captivating audiences with its blend of romance, magic and morality.",
+      "char_count": 172,
+      "scene": "misty West Lake",
+      "characters": ["Bai Suzhen"],
+      "mood": "magical, inviting",
+      "dominant_action": "A graceful white snake rests beside a misty lake with an ancient pagoda in the distance."
+    },
+    {
+      "index": 2,
+      "role": "body",
+      "panel_type": "establishing",
+      "text": "The story revolves around a complex relationship between a white snake spirit, Bai Suzhen, and a young man Xu Xian.",
+      "char_count": 115,
+      "scene": "West Lake bridge",
+      "characters": ["Bai Suzhen", "Xu Xian"],
+      "mood": "tender, curious",
+      "dominant_action": "Bai Suzhen in human form and Xu Xian meet on a lakeside bridge."
+    },
+    {
+      "index": 3,
+      "role": "body",
+      "panel_type": "reaction",
+      "text": "According to the legend, Bai Suzhen, a snake who has cultivated herself into a beautiful woman, falls in love with Xu Xian, a kind-hearted pharmacist.",
+      "char_count": 150,
+      "scene": "traditional herbal pharmacy",
+      "characters": ["Bai Suzhen", "Xu Xian"],
+      "mood": "warm, loving",
+      "dominant_action": "Bai Suzhen smiles lovingly as Xu Xian carefully prepares herbs in his pharmacy."
+    },
+    {
+      "index": 4,
+      "role": "body",
+      "panel_type": "action",
+      "text": "They marry, unaware of Bai Suzhen's true identity.",
+      "char_count": 50,
+      "scene": "wedding courtyard",
+      "characters": ["Bai Suzhen", "Xu Xian"],
+      "mood": "joyful, intimate",
+      "dominant_action": "Bai Suzhen and Xu Xian celebrate their wedding beneath red silk decorations."
+    },
+    {
+      "index": 5,
+      "role": "body",
+      "panel_type": "reaction",
+      "text": "Their love is genuine and deep, but it is put to the test when a monk, Fahai, who knows Bai Suzhen's real form, decides to separate them to uphold the natural order.",
+      "char_count": 165,
+      "scene": "temple stone steps",
+      "characters": ["Fahai"],
+      "mood": "stern, tense",
+      "dominant_action": "Fahai stands on temple steps, sternly resolving to separate the couple."
+    },
+    {
+      "index": 6,
+      "role": "body",
+      "panel_type": "action",
+      "text": "Fahai tricks Xu Xian into giving Bai Suzhen a special wine during the Dragon Boat Festival, which causes her to reveal her true form.",
+      "char_count": 133,
+      "scene": "festival home interior",
+      "characters": ["Bai Suzhen", "Xu Xian"],
+      "mood": "startled, magical",
+      "dominant_action": "Beside a small wine cup, Bai Suzhen becomes a white snake as Xu Xian recoils in surprise."
+    },
+    {
+      "index": 7,
+      "role": "body",
+      "panel_type": "reaction",
+      "text": "Shocked by discovering that his wife is a snake, Xu Xian faints and later dies from the shock.",
+      "char_count": 94,
+      "scene": "quiet home interior",
+      "characters": ["Bai Suzhen", "Xu Xian"],
+      "mood": "sorrowful, gentle",
+      "dominant_action": "The white snake watches over Xu Xian lying motionless, with no injury or graphic detail."
+    },
+    {
+      "index": 8,
+      "role": "body",
+      "panel_type": "action",
+      "text": "Bai Suzhen, desperate to save her husband, braves numerous trials to acquire a magical herb that revives him.",
+      "char_count": 109,
+      "scene": "misty mountain ledge",
+      "characters": ["Bai Suzhen"],
+      "mood": "determined, hopeful",
+      "dominant_action": "Bai Suzhen in human form reaches across a rugged mountain ledge to obtain a glowing magical herb."
+    },
+    {
+      "index": 9,
+      "role": "body",
+      "panel_type": "establishing",
+      "text": "However, the tale reaches its climax when Fahai captures Bai Suzhen and imprisons her under the Leifeng Pagoda.",
+      "char_count": 111,
+      "scene": "Leifeng Pagoda chamber",
+      "characters": ["Bai Suzhen", "Fahai"],
+      "mood": "mournful, confined",
+      "dominant_action": "Bai Suzhen sits within a softly glowing magical enclosure beneath the pagoda as Fahai seals the entrance."
+    },
+    {
+      "index": 10,
+      "role": "body",
+      "panel_type": "action",
+      "text": "Years later, her son with Xu Xian, who is unaware of his mother's fate, becomes a top scholar and eventually frees her.",
+      "char_count": 119,
+      "scene": "Leifeng Pagoda entrance",
+      "characters": ["Bai Suzhen", "Son"],
+      "mood": "hopeful, triumphant",
+      "dominant_action": "Her grown scholar son welcomes Bai Suzhen as she steps out of the opened pagoda entrance."
+    },
+    {
+      "index": 11,
+      "role": "body",
+      "panel_type": "detail",
+      "text": "The Legend of the White Snake explores themes of love, loyalty, and the conflict between supernatural beings and the human world.",
+      "char_count": 129,
+      "scene": "lakeside garden",
+      "characters": ["Bai Suzhen", "Xu Xian"],
+      "mood": "reflective, tender",
+      "dominant_action": "Bai Suzhen and Xu Xian join hands beside the lake, symbolizing enduring love and loyalty."
+    },
+    {
+      "index": 12,
+      "role": "closing",
+      "panel_type": "establishing",
+      "text": "It is a poignant narrative that questions the boundaries of love and the sacrifices one is willing to make for it.",
+      "char_count": 114,
+      "scene": "West Lake sunset",
+      "characters": ["Bai Suzhen", "Xu Xian", "Son"],
+      "mood": "peaceful, reunited",
+      "dominant_action": "The reunited family stands beside West Lake at sunset, with the pagoda far behind them."
+    }
+  ]
+}

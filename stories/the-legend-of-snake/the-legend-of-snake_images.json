@@ -1,0 +1,32 @@
+{
+  "story_slug": "the-legend-of-snake",
+  "generator": "github-copilot-image_generation",
+  "style": "soft Chinese ink-and-watercolor storybook art, delicate flowing lines, gentle expressive faces, jade-green landscapes, warm ivory highlights, and restrained vermilion accents.",
+  "size": "1024x1536",
+  "quality": "high",
+  "references": [
+    {"name": "bai-human", "kind": "character", "path": "stories/the-legend-of-snake/the-legend-of-snake_images/ref_bai-human.png"},
+    {"name": "bai-snake", "kind": "character", "path": "stories/the-legend-of-snake/the-legend-of-snake_images/ref_bai-snake.png"},
+    {"name": "xu-xian", "kind": "character", "path": "stories/the-legend-of-snake/the-legend-of-snake_images/ref_xu-xian.png"},
+    {"name": "fahai", "kind": "character", "path": "stories/the-legend-of-snake/the-legend-of-snake_images/ref_fahai.png"},
+    {"name": "son", "kind": "character", "path": "stories/the-legend-of-snake/the-legend-of-snake_images/ref_son.png"},
+    {"name": "west-lake", "kind": "location", "path": "stories/the-legend-of-snake/the-legend-of-snake_images/ref_west-lake.png"},
+    {"name": "pharmacy", "kind": "location", "path": "stories/the-legend-of-snake/the-legend-of-snake_images/ref_pharmacy.png"},
+    {"name": "home", "kind": "location", "path": "stories/the-legend-of-snake/the-legend-of-snake_images/ref_home.png"},
+    {"name": "pagoda", "kind": "location", "path": "stories/the-legend-of-snake/the-legend-of-snake_images/ref_pagoda.png"}
+  ],
+  "shots": [
+    {"index": 1, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_01.png", "continuity": "HARD CUT"},
+    {"index": 2, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_02.png", "continuity": "HARD CUT"},
+    {"index": 3, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_03.png", "continuity": "HARD CUT"},
+    {"index": 4, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_04.png", "continuity": "HARD CUT"},
+    {"index": 5, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_05.png", "continuity": "HARD CUT"},
+    {"index": 6, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_06.png", "continuity": "HARD CUT"},
+    {"index": 7, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_07.png", "continuity": "SOFT CUT"},
+    {"index": 8, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_08.png", "continuity": "HARD CUT"},
+    {"index": 9, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_09.png", "continuity": "HARD CUT"},
+    {"index": 10, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_10.png", "continuity": "HARD CUT"},
+    {"index": 11, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_11.png", "continuity": "HARD CUT"},
+    {"index": 12, "path": "stories/the-legend-of-snake/the-legend-of-snake_images/part_12.png", "continuity": "SOFT CUT"}
+  ]
+}

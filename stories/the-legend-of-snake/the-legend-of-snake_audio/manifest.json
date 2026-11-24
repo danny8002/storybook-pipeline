@@ -1,0 +1,128 @@
+{
+  "story_slug": "the-legend-of-snake",
+  "endpoint": "http://127.0.0.1:3900/v1/audio/speech",
+  "model": "omnivoice",
+  "model_name": "OmniVoice (k2-fsa/OmniVoice, 600+ languages)",
+  "voice": "default",
+  "response_format": "mp3",
+  "title_audio": {
+    "filename": "title.mp3",
+    "original": "The Legend of the White Snake"
+  },
+  "parts": [
+    {
+      "index": 1,
+      "filename": "the-legend-of-snake_part_01.mp3",
+      "original": "The Legend of the White Snake is a famous Chinese folktale that has been told and retold for centuries, captivating audiences with its blend of romance, magic and morality.",
+      "delivery": "Inviting and gently wondrous.",
+      "mood": "magical, inviting",
+      "scene": "misty West Lake"
+    },
+    {
+      "index": 2,
+      "filename": "the-legend-of-snake_part_02.mp3",
+      "original": "The story revolves around a complex relationship between a white snake spirit, Bai Suzhen, and a young man Xu Xian.",
+      "delivery": "Tender and curious, with clear character names.",
+      "mood": "tender, curious",
+      "scene": "West Lake bridge"
+    },
+    {
+      "index": 3,
+      "filename": "the-legend-of-snake_part_03.mp3",
+      "original": "According to the legend, Bai Suzhen, a snake who has cultivated herself into a beautiful woman, falls in love with Xu Xian, a kind-hearted pharmacist.",
+      "delivery": "Warm and affectionate.",
+      "mood": "warm, loving",
+      "scene": "traditional herbal pharmacy"
+    },
+    {
+      "index": 4,
+      "filename": "the-legend-of-snake_part_04.mp3",
+      "original": "They marry, unaware of Bai Suzhen's true identity.",
+      "delivery": "Joyful and intimate, with a gentle hint of mystery.",
+      "mood": "joyful, intimate",
+      "scene": "wedding courtyard"
+    },
+    {
+      "index": 5,
+      "filename": "the-legend-of-snake_part_05.mp3",
+      "original": "Their love is genuine and deep, but it is put to the test when a monk, Fahai, who knows Bai Suzhen's real form, decides to separate them to uphold the natural order.",
+      "delivery": "Measured and serious as tension enters.",
+      "mood": "stern, tense",
+      "scene": "temple stone steps"
+    },
+    {
+      "index": 6,
+      "filename": "the-legend-of-snake_part_06.mp3",
+      "original": "Fahai tricks Xu Xian into giving Bai Suzhen a special wine during the Dragon Boat Festival, which causes her to reveal her true form.",
+      "delivery": "Build a restrained sense of surprise.",
+      "mood": "startled, magical",
+      "scene": "festival home interior"
+    },
+    {
+      "index": 7,
+      "filename": "the-legend-of-snake_part_07.mp3",
+      "original": "Shocked by discovering that his wife is a snake, Xu Xian faints and later dies from the shock.",
+      "delivery": "Quiet and sorrowful, without frightening dramatization.",
+      "mood": "sorrowful, gentle",
+      "scene": "quiet home interior"
+    },
+    {
+      "index": 8,
+      "filename": "the-legend-of-snake_part_08.mp3",
+      "original": "Bai Suzhen, desperate to save her husband, braves numerous trials to acquire a magical herb that revives him.",
+      "delivery": "Determined, then hopeful.",
+      "mood": "determined, hopeful",
+      "scene": "misty mountain ledge"
+    },
+    {
+      "index": 9,
+      "filename": "the-legend-of-snake_part_09.mp3",
+      "original": "However, the tale reaches its climax when Fahai captures Bai Suzhen and imprisons her under the Leifeng Pagoda.",
+      "delivery": "Solemn and compassionate.",
+      "mood": "mournful, confined",
+      "scene": "Leifeng Pagoda chamber"
+    },
+    {
+      "index": 10,
+      "filename": "the-legend-of-snake_part_10.mp3",
+      "original": "Years later, her son with Xu Xian, who is unaware of his mother's fate, becomes a top scholar and eventually frees her.",
+      "delivery": "Hopeful, lifting gently toward release.",
+      "mood": "hopeful, triumphant",
+      "scene": "Leifeng Pagoda entrance"
+    },
+    {
+      "index": 11,
+      "filename": "the-legend-of-snake_part_11.mp3",
+      "original": "The Legend of the White Snake explores themes of love, loyalty, and the conflict between supernatural beings and the human world.",
+      "delivery": "Thoughtful and reflective.",
+      "mood": "reflective, tender",
+      "scene": "lakeside garden"
+    },
+    {
+      "index": 12,
+      "filename": "the-legend-of-snake_part_12.mp3",
+      "original": "It is a poignant narrative that questions the boundaries of love and the sacrifices one is willing to make for it.",
+      "delivery": "Peaceful, reflective closing.",
+      "mood": "peaceful, reunited",
+      "scene": "West Lake sunset"
+    }
+  ],
+  "full_audio": {
+    "filename": "the-legend-of-snake_full.mp3",
+    "includes_title": true,
+    "scene_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ]
+  }
+}

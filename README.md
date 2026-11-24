@@ -1,326 +1,229 @@
-# Claude × Image Generation
+# AI Storybook Pipeline
 
-Connect Claude to three forms of image generation, and GitHub Copilot to a complete **AI Storybook pipeline** that turns a plain-English story into an illustrated, narrated, self-contained HTML book.
+Turn an English story into a consistently illustrated, narrated storybook with **GitHub Copilot**, its native image-generation tool, and **local VoiceStudio OmniVoice**.
 
-<p align="center">
-  <img src="level-1-2-3-comparison/coffee-logo-prompt-to-design.png" height="250" alt="Level 1 — code-based design engine">
-  <img src="level-1-2-3-comparison/coffee-logo-3d-render.png" height="250" alt="Level 2 — Three.js 3D render">
-  <img src="level-1-2-3-comparison/coffee-logo.jpg" height="250" alt="Level 3 — diffusion model">
-</p>
-<p align="center"><em>One prompt — “a minimalist logo for a coffee shop” — rendered three ways:<br><b>Level 1</b> code-based design engine · <b>Level 2</b> Three.js 3D scene · <b>Level 3</b> diffusion model.</em></p>
+The pipeline produces three shareable outputs:
 
-The through-line of every skill here is the same: **Claude does the prompt engineering and orchestration**, not just a raw API call. You describe what you want in plain language; Claude turns it into a strong prompt / scene / plan, runs the right tool, verifies the result, and hands you the file.
+- **Self-contained HTML** — a responsive swipe/tap reader with embedded illustrations and per-scene MP3 narration; works offline.
+- **Printable A4 PDF** — a title-and-image cover, a blank page, and two illustration-and-text groups per story page.
+- **Full-story MP3** — the optional spoken title followed by every scene's narration.
 
-```
-your idea  →  Claude plans & prompts  →  the right generator  →  verified output
-```
+## Current status
 
-## 📖 Read the guides
+This checkout focuses on the storybook pipeline. It contains **seven project-local Copilot skills**, Python publishing and narration helpers, and an included **12-scene example, “The Legend of the White Snake.”**
 
-This repo is the companion code for a series of written tutorials on [**learnwithhasan.com**](https://learnwithhasan.com/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=body) that walk through how each piece was built:
+The earlier Claude Code Level 1–3 image generators, their example galleries, and the Cloudflare `.env.example` are **not included in this checkout**. The storybook uses Copilot's native image tool rather than those generators, Fal, or a Cloudflare image API; narration uses local VoiceStudio rather than ElevenLabs.
 
-| Guide | Covers |
-|-------|--------|
-| [Generate images in Claude Code with **no AI model**](https://learnwithhasan.com/guide/claude-code-images-no-ai-model/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=body) | **Levels 1 & 2** — the code-based design engine and the Three.js 3D renderer |
-| [**Free AI images** with Claude Code + **Cloudflare**](https://learnwithhasan.com/guide/free-ai-images-claude-code-cloudflare/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=body) | **Level 3** — the Cloudflare Workers AI (Flux) diffusion model |
-| [**Consistent AI characters** for visual stories](https://learnwithhasan.com/guide/consistent-ai-characters-visual-stories/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=body) | **The Storybook pipeline** — keeping characters stable across every scene |
-
-## Two things this repo teaches
-
-1. **Image generation, three ways (Levels 1–3)** — the *same* "generate an image" request, solved with three very different engines, from free-and-local to a hosted diffusion model.
-2. **Composing skills into an app (the Storybook pipeline)** — five skills chained end-to-end into one product.
-
----
-
-## Part 1 — Image generation in three levels
-
-The three level skills all answer "make me an image," but trade off cost, realism, and control very differently.
-
-| Level | Skill folder | Engine | Needs an API? | Great for |
-|-------|--------------|--------|---------------|-----------|
-| **1** | [`level-1-image-generator/`](.claude/skills/level-1-image-generator/) | **Code-based design engine** — Pillow + numpy draw gradients, mesh fields, glow, grain, shapes, and real typography. No image model. | ❌ Free / local | Posters, quote & story/reel covers, carousel slides, wallpapers, Bauhaus/Swiss geometric art, neon/synthwave, soft product visuals — anything **typographic or designed**. Crisp text, no AI artifacts. |
-| **2** | [`level-2-image-generator/`](.claude/skills/level-2-image-generator/) | **Real Three.js 3D scene**, rendered to one frame headlessly (headless-gl under Xvfb). No image model. | ❌ Free / local (Node) | 3D product shots, rendered scenes, wallpapers, thumbnail backgrounds in named styles (dark studio, Apple light, nature, sunset, underwater). |
-| **3** | [`level-3-image-generator/`](.claude/skills/level-3-image-generator/) | **Diffusion model** — Cloudflare Workers AI (`flux-1-schnell`). A hosted image model. | ✅ Cloudflare keys | Photographic / illustrative looks, freeform subjects, logos & icons, quick thumbnails — anything a diffusion model does well. |
-
-> **Why levels?** Levels 1 and 2 never touch an image model — they *construct* the picture from code, so they're free, deterministic, and perfect at text and geometry. Level 3 is the "classic" approach: hand a prompt to a diffusion model. Different jobs want different levels.
->
-> 📖 Guides: [no-AI-model images (Levels 1 & 2)](https://learnwithhasan.com/guide/claude-code-images-no-ai-model/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=body) · [free Cloudflare images (Level 3)](https://learnwithhasan.com/guide/free-ai-images-claude-code-cloudflare/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=body)
-
-### Level 1 — the code-based design engine
+## Included example
 
 <p align="center">
-  <img src="level1-examples/synthwave_poster.png" height="240" alt="Synthwave NEON HORIZON poster">
-  <img src="level1-examples/quote_card.png" height="240" alt="Quote card — Build quietly. Let the work make the noise.">
-  <img src="level1-examples/geometric_art.png" height="240" alt="Bauhaus geometric composition">
-  <img src="level1-examples/carousel_slide.png" height="240" alt="Soft Apple-style carousel slide">
+  <img src="stories/the-legend-of-snake/the-legend-of-snake_images/part_01.png" height="250" alt="The Legend of the White Snake — scene 1">
+  <img src="stories/the-legend-of-snake/the-legend-of-snake_images/part_02.png" height="250" alt="The Legend of the White Snake — scene 2">
+  <img src="stories/the-legend-of-snake/the-legend-of-snake_images/part_03.png" height="250" alt="The Legend of the White Snake — scene 3">
 </p>
 
-*Everything above is drawn with math and type — no image model. Crisp text, perfect alignment, no AI artifacts.* → [`level1-examples/`](level1-examples/)
+The example uses portrait (`1024x1536`) Chinese ink-and-watercolor storybook illustrations. Its folder contains scenes, character/location references, a visual bible, a shot list, image and audio manifests, and these exports:
 
-### Level 2 — the Three.js 3D renderer
+- [Read the HTML storybook](stories/the-legend-of-snake/the-legend-of-snake.html) — download and open locally in a browser.
+- [Open the printable PDF](stories/the-legend-of-snake/the-legend-of-snake.pdf).
+- [Listen to the full narration](stories/the-legend-of-snake/the-legend-of-snake_audio/the-legend-of-snake_full.mp3).
+- [Read the source story](stories/the-legend-of-snake.md).
 
-<p align="center">
-  <img src="level2-examples/rocket_launch_station_pixar_16x9.png" height="170" alt="Low-poly rocket launch station at dusk">
-  <img src="level2-examples/headphones_apple_light_1x1.png" height="170" alt="Studio-lit 3D headphones, Apple-light style">
-  <img src="level2-examples/tree_flowers_16x9.png" height="170" alt="3D tree and flowers scene">
-</p>
+Embedded media makes the HTML large; use a browser rather than a text editor or GitHub's source preview.
 
-*A real 3D scene, built in code and captured as one frame — still no image model.* → [`level2-examples/`](level2-examples/)
+## How it works
 
-### Level 3 — the diffusion model (Cloudflare Flux)
-
-<p align="center">
-  <img src="level3-examples/bookstore-cafe-rainy-evening.jpg" height="210" alt="Photoreal independent bookstore on a rainy evening">
-  <img src="level3-examples/water-bottle-marble.jpg" height="210" alt="Product shot — water bottle on marble">
-  <img src="level3-examples/ai-agents-thumbnail-bg.jpg" height="210" alt="Thumbnail background for an AI agents video">
-</p>
-
-*A hosted diffusion model doing what it does best — photographic and freeform looks.* → [`level3-examples/`](level3-examples/)
-
-### Same prompt, three engines
-
-[`level-1-2-3-comparison/`](level-1-2-3-comparison/) renders the coffee-shop-logo prompt through all three levels (the trio at the top of this page) — the clearest way to feel the trade-offs.
-
----
-
-## Part 2 — The AI Storybook pipeline
-
-Building on the image skills, this is a small **application**: give it an English story, get back a single self-contained `.html` storybook — a swipe/tap player with one illustration and one narration clip per scene, all embedded so the file works offline and shares as-is.
-
-<p align="center">
-  <img src="stories/the-three-gardeners/the-three-gardeners_images/part_02.png" height="250" alt="Storybook scene — grandmother and children in a flower garden">
-  <img src="stories/the-three-gardeners/the-three-gardeners_images/part_05.png" height="250" alt="Storybook scene">
-  <img src="stories/the-three-gardeners/the-three-gardeners_images/part_08.png" height="250" alt="Storybook scene">
-</p>
-<p align="center"><em>Consistent, character-stable illustrations across every scene of <b>“The Three Gardeners.”</b></em></p>
-
-> 📖 Guide: [Consistent AI characters for visual stories](https://learnwithhasan.com/guide/consistent-ai-characters-visual-stories/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=body) — how the illustrator keeps characters stable across scenes.
-
-```
+```text
 stories/{slug}.md
-      │
-      ▼
-1. scene-splitter        → {slug}_scenes.json            estimate scenes from words/story beats; user confirms or sets count
-2. story-illustrator     → {slug}_images.json (+ images) one consistent image per scene   (Copilot native image tool)
-3. story-narrator        → {slug}_audio/*.mp3            per-scene clips + full-story MP3  (local VoiceStudio OmniVoice)
-4a. story-html-publisher → {slug}.html                  self-contained narrated HTML
-4b. story-pdf-publisher  → {slug}.pdf                   printable A4, two image + text groups per page
-    (4a and 4b build in parallel after PDF background selection)
+      |
+      +-- optional: story-polish -> assessed or polished prose
+      |
+      v
+1. scene-splitter        -> {slug}_scenes.json
+2. story-illustrator     -> {slug}_bible.md, {slug}_shotlist.md,
+                           {slug}_images.json + local PNGs
+3. story-narrator        -> {slug}_audio/manifest.json,
+                           per-scene MP3s + {slug}_full.mp3
+4a. story-html-publisher -> {slug}_story.json + {slug}.html
+4b. story-pdf-publisher  -> {slug}.pdf
+    (4a and 4b build in parallel after PDF background approval)
 ```
 
-[`storybook-pipeline/`](.github/skills/storybook-pipeline/) is the **GitHub Copilot orchestrator** — one entry point ("make a storybook from this") that prepares scenes, illustrations, and narration, then runs the HTML and PDF publishers in parallel. It locks a shared filename convention so every image and audio clip pairs by scene index and preserves each step's approval gate.
+All generated pipeline artifacts live under `stories/{slug}/`. **Scene N pairs with image N, audio N, and text N.** The source story stays outside that folder.
 
 | Skill | Role | Backend |
 |-------|------|---------|
-| [`story-polish/`](.github/skills/story-polish/) | Optional prose preparation: confirm RAZ-aligned level B-K and 12/24/48 scenes (default 24), then polish only if length, language, or story quality misses the project bar | GitHub Copilot |
-| [`scene-splitter/`](.github/skills/scene-splitter/) | Estimate scene count from word count and story beats, ask for confirmation/custom count, then split (1 image + 1 narration each) | GitHub Copilot |
-| [`story-illustrator/`](.github/skills/story-illustrator/) | One consistent PNG per scene, using local cascading references | **Copilot native `image_generation` tool** |
-| [`story-narrator/`](.github/skills/story-narrator/) | Voice selection, one MP3 per scene, and a full-story MP3 | **Local VoiceStudio** (`k2-fsa/OmniVoice`, 600+ languages), VoiceStudio MCP, FFmpeg |
-| [`story-html-publisher/`](.github/skills/story-html-publisher/) | Consolidate scenes + images + audio into one self-contained HTML player | Local Python, stdlib only |
-| [`story-pdf-publisher/`](.github/skills/story-pdf-publisher/) | Two stacked image + original-text groups per A4 portrait page, with a chosen full-page background | Local Python, ReportLab |
+| [storybook-pipeline](.github/skills/storybook-pipeline/SKILL.md) | Orchestrate intake, readiness checks, scene/image/audio pairing, and both exports | GitHub Copilot |
+| [story-polish](.github/skills/story-polish/SKILL.md) | Optional preparation for a confirmed RAZ-aligned level B–K and 12/24/48 scenes (default 24); rewrite only when needed | GitHub Copilot |
+| [scene-splitter](.github/skills/scene-splitter/SKILL.md) | Estimate scene count from body words and story beats, confirm the count, then split without rewriting | GitHub Copilot |
+| [story-illustrator](.github/skills/story-illustrator/SKILL.md) | Build visual references and a continuity-aware shot list, then generate one consistent PNG per scene | Copilot native `image_generation` |
+| [story-narrator](.github/skills/story-narrator/SKILL.md) | Select a saved voice, review narration, generate scene clips, and assemble the full track | Local VoiceStudio OmniVoice + FFmpeg |
+| [story-html-publisher](.github/skills/story-html-publisher/SKILL.md) | Validate and embed scenes, images, and audio into an offline HTML player | Python standard library |
+| [story-pdf-publisher](.github/skills/story-pdf-publisher/SKILL.md) | Package local images and original scene text into an A4 portrait PDF | Python + ReportLab |
 
-### Finished examples
+### Review gates and limits
 
-Three completed storybooks live in [`stories/`](stories/) — each folder has the deliverable `.html`:
+- Confirm the slug and one illustration size: **1536x1024 landscape** (default) or **1024x1536 portrait**.
+- Approve the scene count and scene plan. The beginner splitter preserves exact prose and enforces **240 characters per scene**; its count is not restricted to 12/24/48.
+- Review the visual style/bible, references, and shot list before scene generation. Image QA is optional: request **“with QA.”**
+- Select a VoiceStudio voice and approve the narration script before synthesis. `default` must be an explicit choice, not a fallback.
+- Choose the PDF background and review both exports before finishing.
+- Existing artifacts are offered for resume/skip rather than silently replaced. Missing tools or media are reported; a partial HTML requires explicit approval, and the PDF never uses placeholders.
 
-- [`stories/the-three-gardeners/the-three-gardeners.html`](stories/the-three-gardeners/the-three-gardeners.html)
-- [`stories/pepper-runs-off/pepper-runs-off.html`](stories/pepper-runs-off/pepper-runs-off.html)
-- [`stories/the-little-cloud/the-little-cloud.html`](stories/the-little-cloud/the-little-cloud.html)
-
-Open any of them in a browser to read the finished, narrated storybook.
-
----
-
-## Project structure
-
-```
-claude-image-generation/
-├── .github/skills/
-│   ├── scene-splitter/             # Storybook step 1 — story → scenes
-│   ├── story-illustrator/          # Storybook step 2 — Copilot native image tool
-│   ├── story-narrator/             # Storybook step 3 — local VoiceStudio MP3
-│   ├── story-html-publisher/       # Parallel publishing — everything → one .html
-│   ├── story-pdf-publisher/        # Parallel publishing — images + text → A4 .pdf
-│   └── storybook-pipeline/         # GitHub Copilot orchestrator
-├── .claude/skills/
-│   ├── level-1-image-generator/    # Level 1 — code-based design engine (Pillow + numpy + fonts)
-│   ├── level-2-image-generator/    # Level 2 — Three.js 3D scene, rendered headlessly
-│   └── level-3-image-generator/    # Level 3 — Cloudflare Workers AI (flux-1-schnell) diffusion
-├── level1-examples/                # sample outputs, Level 1
-├── level2-examples/                # sample outputs, Level 2
-├── level3-examples/                # sample outputs, Level 3
-├── level-1-2-3-comparison/         # one prompt rendered by all three levels
-├── stories/                        # story .md inputs + finished storybook folders
-├── .env.example                    # API key template  → copy to .env
-└── .mcp.json.example               # MCP server config  → copy to .mcp.json
-```
-
----
+`story-polish` is an optional step **before** the orchestrator, not an automatic pipeline stage. Its B–K assessments are editorial estimates, not official Reading A-Z placements; downstream scene JSON remains beginner-targeted.
 
 ## Setup
 
-Open this folder in [Claude Code](https://docs.claude.com/en/docs/claude-code) for the Level 1–3 skills, or in GitHub Copilot for the storybook pipeline. The project-local skill directories are discovered automatically. What each part needs:
+### 1. GitHub Copilot and Python
 
-### 1. Python (Levels 1 & 3, storybook helpers)
+Open this repository in a GitHub Copilot environment that supports project-local skills and the native `image_generation` tool. Skills live in [.github/skills/](.github/skills/). Illustration requires access to Copilot image generation and uses your image allowance.
 
-```bash
-pip install pillow numpy requests python-dotenv
-```
-
-### 2. API keys — copy the template and fill in what you need
+Run helper commands from the repository root. On macOS/Linux, create a Python virtual environment and install the PDF dependency:
 
 ```bash
-cp .env.example .env
-```
-
-| Key | Needed for | Where to get it |
-|-----|-----------|-----------------|
-| `CF_ACCOUNT_ID`, `CF_API_TOKEN` | **Level 3** (Cloudflare diffusion) | Cloudflare dashboard → *Workers & Pages → Overview* (Account ID) and *My Profile → API Tokens* with **Workers AI** run permission (Token). Free tier works. |
-
-*Levels 1 & 2 and the migrated storybook skills need no API keys.* `.env` is gitignored, so your keys never get committed.
-
-### 3. VoiceStudio for narration (storybook only)
-
-Start your local VoiceStudio deployment on `127.0.0.1:3900`. The narrator calls its OpenAI-compatible endpoint:
-
-```text
-POST http://127.0.0.1:3900/v1/audio/speech
-```
-
-The storybook locks these request settings:
-
-```json
-{
-  "model": "omnivoice",
-  "voice": "<user-selected VoiceStudio profile ID or default>",
-  "response_format": "mp3"
-}
-```
-
-No cloud TTS service or API key is required. Verify the deployment with:
-
-```bash
-python .github/skills/story-narrator/assets/voicestudio_tts.py --check
-```
-
-If the check says `omnivoice` is unavailable, enable the `k2-fsa/OmniVoice` engine in VoiceStudio and restart the service.
-
-For VoiceStudio MCP voice discovery, use the `VoiceStudio` HTTP server entry in
-[.mcp.json.example](.mcp.json.example), pointing to `http://127.0.0.1:3900/mcp/`.
-Copy it into your local `.mcp.json` (or merge the entry if that file already exists),
-then reload your MCP client. The narrator lists saved voice profiles and asks
-you to choose one, then uses that profile ID for every title and scene request
-through the OpenAI-compatible MP3 endpoint. `default` is an explicit choice,
-not a silent fallback.
-
-FFmpeg must be installed and available on `PATH`. After generating the clips,
-the narrator assembles the optional title and every scene in order into
-`stories/{slug}/{slug}_audio/{slug}_full.mp3` without re-synthesis or
-re-encoding. This standalone MP3 complements the HTML book, which continues
-to use individual scene clips. To rebuild the full track after changing clips:
-
-```bash
-python3 .github/skills/story-narrator/assets/assemble_audio.py \
-  stories/<slug>/<slug>_audio/manifest.json
-```
-
-### 4. Node (Level 2 only)
-
-Level 2 runs `bash <skill>/scripts/setup.sh` on first use to install its npm deps and drop in the prebuilt WebGL binary — no manual step.
-
-### 5. PDF publishing (storybook only)
-
-Install the PDF helper's dependencies in your Python virtual environment:
-
-```bash
+python3 -m venv .venv
+source .venv/bin/activate
 python3 -m pip install -r .github/skills/story-pdf-publisher/assets/requirements.txt
 ```
 
-The PDF skill asks you to choose a full-page **eye-friendly warm cream**
-(`#F7F3E8`, recommended) or **white** background. The A4 portrait PDF opens with
-a dedicated cover showing the title above the first illustration, followed by
-an unnumbered blank page. Subsequent
-pages have two vertically stacked groups, each showing an uncropped illustration
-above its original scene text; there is no repeated title header. An odd final
-scene occupies the top half. Total pages: `2 + ceil(scene_count / 2)`.
-Story numbering starts at 1 after the blank page: odd numbers at bottom-right,
-even numbers at bottom-left. The cover and blank page have no numbers.
-The HTML also shows title and image on its cover, followed by every original
-scene, including scene 1.
+On Windows, use `python` and activate the virtual environment with the appropriate Windows command. The HTML and narration helpers use only Python's standard library; they do not require Pillow, NumPy, requests, or dotenv.
+
+### 2. Local VoiceStudio
+
+Start a local VoiceStudio deployment at `http://127.0.0.1:3900` with the **OmniVoice** engine (`k2-fsa/OmniVoice`, API model ID `omnivoice`) enabled. VoiceStudio is a separate prerequisite; this repository does not install or start it.
+
+Verify the engine before narration:
 
 ```bash
-python3 .github/skills/story-pdf-publisher/assets/build_pdf.py \
-  <slug> --background eye-friendly
+python3 .github/skills/story-narrator/assets/voicestudio_tts.py --check
 ```
 
-Use `--background white` for white pages. Output:
-`stories/{slug}/{slug}.pdf`. The PDF requires scenes and local images, not
-audio or an HTML build. The pipeline builds PDF and HTML concurrently after
-background approval and presents both exports for review.
+If `omnivoice` is unavailable, enable the engine in VoiceStudio and restart the service.
 
----
+The narrator uses:
+
+```text
+POST http://127.0.0.1:3900/v1/audio/speech
+model: omnivoice
+voice: <user-selected saved profile ID or explicitly selected default>
+response_format: mp3
+```
+
+Voice discovery uses the **VoiceStudio MCP** endpoint at `http://127.0.0.1:3900/mcp/`. Add this entry to your MCP client's configuration:
+
+```json
+{
+  "mcpServers": {
+    "VoiceStudio": {
+      "type": "http",
+      "url": "http://127.0.0.1:3900/mcp/"
+    }
+  }
+}
+```
+
+Use [.mcp.json.example](.mcp.json.example) as a reference, merging into existing configuration rather than overwriting it. That template also contains a `vidtsx` entry, which is not required for the storybook pipeline. Reload your MCP client and ensure VoiceStudio's `list_voices` tool is available.
+
+MCP lists saved profiles; MP3 synthesis uses the HTTP speech endpoint because VoiceStudio MCP's `generate_speech` does not currently offer MP3.
+
+### 3. FFmpeg
+
+Install FFmpeg and make sure `ffmpeg` is on `PATH`:
+
+```bash
+ffmpeg -version
+```
+
+It concatenates the optional title and scene clips into the full-story MP3 without re-synthesis or re-encoding. No cloud TTS or image API keys are needed for this pipeline.
 
 ## Using it
 
-Ask Claude Code for the Level 1–3 image skills, or ask GitHub Copilot for the migrated storybook pipeline. Each agent picks the matching skill, does the prompt/plan work, runs the generator, verifies, and gives you the file.
+Put an English story in `stories/my-story.md`, then ask GitHub Copilot:
 
-**Level 1 — designed graphics**
-- *"Generate a synthwave poster, chrome title NEON HORIZON, 1:2."*
-- *"Make a quote card: 'Build quietly. Let the work make the noise.' — 9:16."*
-- *"A Bauhaus geometric composition, bold primaries, 1:1."*
+> Run the storybook pipeline on stories/my-story.md.
 
-**Level 2 — 3D renders**
-- *"Render a pair of headphones, Apple-light studio style, 1:1."*
-- *"3D scene of a rocket launch station, 16:9."*
+For optional image review:
 
-**Level 3 — diffusion model**
-- *"Generate a thumbnail background for a video about AI agents."*
-- *"A cozy bookstore café on a rainy evening."*
+> Run the storybook pipeline on stories/my-story.md with QA.
 
-**Storybook pipeline (GitHub Copilot)**
-- Drop a story in `stories/my-story.md`, then: *"Run the storybook pipeline on stories/my-story.md."*
-- Or a single step: *"Illustrate this story"* / *"Narrate this story."*
+For reading-level preparation before the pipeline:
 
-You can also run the Level 3 script directly:
+> Polish stories/my-story.md for RAZ-aligned level G and 24 scenes.
+
+The polish skill keeps the original untouched and, when a rewrite is needed, saves a file such as `stories/my-story_G_24.md`. Run the pipeline on the approved prose file afterward.
+
+Individual skills can also be requested: **“Split this story into scenes,” “Illustrate this story,” “Narrate this story,” “Build the storybook HTML,”** or **“Export the storybook PDF.”**
+
+### Rebuild existing exports
+
+After updating approved upstream media, rebuild from the repository root:
 
 ```bash
-python .claude/skills/level-3-image-generator/generate.py "a cyberpunk cat coding at night" -o cat.jpg
+# Embed existing scenes, images, and scene audio into HTML.
+python3 .github/skills/story-html-publisher/assets/build_html.py \
+  the-legend-of-snake
+
+# Build the PDF using the approved background.
+python3 .github/skills/story-pdf-publisher/assets/build_pdf.py \
+  the-legend-of-snake --background eye-friendly
+
+# Reassemble the full track after changing title or scene clips.
+python3 .github/skills/story-narrator/assets/assemble_audio.py \
+  stories/the-legend-of-snake/the-legend-of-snake_audio/manifest.json
 ```
 
----
+The PDF supports **warm cream** (`eye-friendly`, `#F7F3E8`, recommended) or **white** (`white`, `#FFFFFF`). It needs scenes and valid local images, not narration or the HTML output.
 
-## How a skill works
+### Export behavior
 
-An Agent Skill is a folder with a `SKILL.md`. The YAML frontmatter's `description` tells the agent **when** to use the skill; the markdown body tells it **how**. Claude Code discovers the Level 1–3 skills under `.claude/skills/`, while GitHub Copilot discovers the storybook skills under `.github/skills/`.
+**HTML:** a separate title-and-first-image cover, every original scene (including scene 1), and a “The End” screen. Tap the image or play button for narration; navigate with swipes, arrow keys, buttons, or progress dots. An auto-play toggle advances after narration ends. All media is embedded; no assets folder or internet connection is needed for playback.
 
-## A note on secrets
+**PDF:** A4 portrait, an unnumbered cover and blank page, then two stacked uncropped image-and-text groups per page. An odd final scene uses the top slot. Total pages: `2 + ceil(scene_count / 2)`. Story-page numbering starts at 1, alternating bottom-right on odd pages and bottom-left on even pages. Audio is not embedded.
 
-Keep real keys in `.env` and `.mcp.json` only (both gitignored) — never in code or committed config. If a token ever lands in a commit, rotate it at the provider — the value stays recoverable from git history otherwise.
+**MP3:** one standalone full-story track in the audio folder; the HTML continues to use individual scene clips.
 
-## License
+## Project structure
 
-Released under the [MIT License](LICENSE) © 2026 Hasan Aboul Hasan — use, adapt, and build on it freely.
+```text
+claude-image-generation/
+├── .github/skills/
+│   ├── story-polish/             # Optional reading-level prose preparation
+│   ├── scene-splitter/           # Story -> approved scenes
+│   ├── story-illustrator/        # Visual bible, references, shot list, PNGs
+│   ├── story-narrator/           # VoiceStudio MP3 + FFmpeg assembly helpers
+│   ├── story-html-publisher/     # HTML builder + player template
+│   ├── story-pdf-publisher/      # A4 PDF builder + requirements + tests
+│   └── storybook-pipeline/       # Copilot orchestrator
+├── stories/
+│   ├── the-legend-of-snake.md
+│   ├── the-legend-of-snake_polished.md
+│   └── the-legend-of-snake/
+│       ├── the-legend-of-snake_scenes.json
+│       ├── the-legend-of-snake_bible.md
+│       ├── the-legend-of-snake_shotlist.md
+│       ├── the-legend-of-snake_images.json
+│       ├── the-legend-of-snake_images/
+│       ├── the-legend-of-snake_audio/
+│       ├── the-legend-of-snake_story.json
+│       ├── the-legend-of-snake.html
+│       └── the-legend-of-snake.pdf
+├── .mcp.json.example             # Sanitized MCP configuration template
+├── .gitignore
+└── README.md
+```
 
-The fonts bundled in [`level-1-image-generator/fonts/`](.claude/skills/level-1-image-generator/fonts/) are **not** covered by MIT; each is licensed under the **SIL Open Font License 1.1**, with its own `*-OFL.txt` license file shipped alongside it.
+## Secrets
 
----
+Keep live tokens in local configuration only. [.gitignore](.gitignore) excludes `.mcp.json`, `.env`, and local Python environments. Commit only sanitized examples; if a token enters Git history, rotate it at the provider.
 
-Built by [Hasan Aboul Hasan](https://learnwithhasan.com/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=body)
+## Background and attribution
 
-<!-- lwh-footer -->
+The original image-generation tutorials and storybook guide were created by [Hasan Aboul Hasan](https://learnwithhasan.com/):
 
----
+- [Generate images in Claude Code with no AI model](https://learnwithhasan.com/guide/claude-code-images-no-ai-model/) — historical Level 1–2 material.
+- [Free AI images with Claude Code + Cloudflare](https://learnwithhasan.com/guide/free-ai-images-claude-code-cloudflare/) — historical Level 3 material.
+- [Consistent AI characters for visual stories](https://learnwithhasan.com/guide/consistent-ai-characters-visual-stories/) — background on visual consistency.
 
-## 📘 The free book
+These guides provide background, not setup instructions for the current Copilot/VoiceStudio workflow.
 
-This repo is one thing I built with AI. The book is the system underneath it.
-
-**[Vibe Engineering Blocks](https://learnwithhasan.com/blocks/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=footer)** is my free 74-page book.
-47 building blocks for shipping real apps with AI. One block per page, each with the exact
-prompt to hand your AI.
-
-Built by **[Hasan Aboul Hasan](https://learnwithhasan.com/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=footer)**. I build real products with AI and
-write down exactly how.
-[Guides](https://learnwithhasan.com/guides/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=footer) &nbsp;·&nbsp;
-[YouTube](https://www.youtube.com/@HasanAboulHasan) &nbsp;·&nbsp;
-[Community](https://learnwithhasan.com/community/?utm_source=github&utm_medium=readme&utm_campaign=claude-image-generation&utm_content=footer)
+The original README described an MIT release. A `LICENSE` file is currently absent from this working tree; consult the project's license history before redistribution.
